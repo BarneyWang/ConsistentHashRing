@@ -35,8 +35,23 @@ public class ConsistencyHashRing {
 
     }
 
-    //TODO add node
-    //TODO delete node
+
+
+    public void addNode(String node){
+        for (int i = 0; i < VIRTUAL_NODE_AMOUNT; i++) {
+            String virtualServer = node+"&&"+i;
+            int key = getHash(virtualServer);
+            VIRTUAL_NODES.put(key, virtualServer);
+        }
+    }
+
+    public void deleteNode(String node){
+        for (int i = 0; i < VIRTUAL_NODE_AMOUNT; i++) {
+            String virtualServer = node+"&&"+i;
+            int key = getHash(virtualServer);
+            VIRTUAL_NODES.remove(key, virtualServer);
+        }
+    }
 
 
     public String getRealServer(String requestNode){
@@ -62,4 +77,7 @@ public class ConsistencyHashRing {
         return Math.abs(hash);
 
     }
+
+
+
 }
